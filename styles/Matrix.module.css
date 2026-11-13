@@ -1,0 +1,322 @@
+.stage {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  color: #00ff41;
+  font-family: 'Courier New', monospace;
+  overflow: hidden;
+}
+
+.rain {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, transparent 35%, #000 100%);
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.askBox {
+  text-align: center;
+}
+
+.question {
+  font-size: 22px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px #00ff41;
+  margin-bottom: 36px;
+}
+
+.pills {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+}
+
+.pill {
+  padding: 14px 52px;
+  border: none;
+  border-radius: 999px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pill:hover {
+  transform: scale(1.06);
+}
+
+.bluePill {
+  background: #1e6bff;
+  box-shadow: 0 0 22px rgba(30, 107, 255, 0.7);
+}
+
+.redPill {
+  background: #e02424;
+  box-shadow: 0 0 22px rgba(224, 36, 36, 0.7);
+}
+
+.panel {
+  width: 100%;
+  max-width: 640px;
+  max-height: 92vh;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.88);
+  border: 1px solid #00ff41;
+  border-radius: 10px;
+  padding: 28px;
+  box-shadow: 0 0 30px rgba(0, 255, 65, 0.25);
+  animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.title {
+  font-size: 28px;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px #00ff41;
+}
+
+.label {
+  display: block;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  opacity: 0.8;
+}
+
+.inputRow {
+  display: flex;
+  gap: 8px;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px;
+  background: #000;
+  border: 1px solid #00ff41;
+  border-radius: 6px;
+  color: #00ff41;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.input:focus {
+  outline: none;
+  box-shadow: 0 0 12px rgba(0, 255, 65, 0.5);
+}
+
+.input::placeholder {
+  color: rgba(0, 255, 65, 0.35);
+}
+
+.submit {
+  padding: 12px 20px;
+  background: #00ff41;
+  border: none;
+  border-radius: 6px;
+  color: #000;
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.error {
+  margin-top: 16px;
+  padding: 12px;
+  border: 1px solid #e02424;
+  border-radius: 6px;
+  color: #ff8080;
+  font-size: 14px;
+}
+
+.result {
+  margin-top: 24px;
+}
+
+.repoName {
+  font-size: 18px;
+  margin-bottom: 12px;
+  text-shadow: 0 0 8px #00ff41;
+}
+
+.scoreBlock {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.score {
+  font-size: 56px;
+  font-weight: 700;
+  text-shadow: 0 0 18px #00ff41;
+}
+
+.score span {
+  font-size: 20px;
+  opacity: 0.6;
+}
+
+.riskLabel {
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.criteriaList {
+  display: grid;
+  gap: 10px;
+}
+
+.criterion {
+  padding: 12px;
+  border-left: 3px solid #00ff41;
+  background: rgba(0, 255, 65, 0.04);
+  border-radius: 4px;
+}
+
+.failed {
+  border-left-color: #e02424;
+  background: rgba(224, 36, 36, 0.06);
+}
+
+.criterionTitle {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.detail {
+  font-size: 12px;
+  opacity: 0.75;
+  margin-top: 4px;
+}
+
+.risk,
+.precaution {
+  font-size: 12px;
+  line-height: 1.5;
+  margin-top: 6px;
+}
+
+.risk strong {
+  color: #ff8080;
+}
+
+.precaution strong {
+  color: #6fb5ff;
+}
+
+.copyButton {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid #00ff41;
+  border-radius: 6px;
+  color: #00ff41;
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.copyButton:hover {
+  background: rgba(0, 255, 65, 0.1);
+}
+
+/* Colapso: el contenido se succiona hacia el centro y aparece el agujero negro */
+.hole {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #000;
+  box-shadow: 0 0 80px 40px #000, 0 0 220px 140px rgba(0, 0, 0, 0.9);
+  transform: translate(-50%, -50%) scale(0);
+  z-index: 3;
+  animation: grow 2.6s cubic-bezier(0.7, 0, 0.9, 0.5) 0.4s forwards;
+}
+
+.collapsing .content {
+  animation: suck 2.2s cubic-bezier(0.6, 0, 0.9, 0.4) forwards;
+}
+
+.collapsing .rain {
+  animation: fadeRain 2.2s ease-in forwards;
+}
+
+@keyframes suck {
+  0% {
+    transform: scale(1) rotate(0deg);
+    filter: blur(0);
+    opacity: 1;
+  }
+  70% {
+    filter: blur(4px);
+  }
+  100% {
+    transform: scale(0) rotate(900deg);
+    filter: blur(10px);
+    opacity: 0;
+  }
+}
+
+@keyframes grow {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(700);
+  }
+}
+
+@keyframes fadeRain {
+  to {
+    opacity: 0;
+  }
+}
+
+.blank {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+}
