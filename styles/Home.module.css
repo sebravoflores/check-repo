@@ -250,6 +250,41 @@
   margin-bottom: 8px;
 }
 
+.riskLabel {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.detail {
+  font-size: 12px;
+  color: #bbb;
+  margin-top: 4px;
+}
+
+.risk,
+.precaution {
+  font-size: 12px;
+  line-height: 1.5;
+  margin-top: 6px;
+  color: #ccc;
+}
+
+.risk strong {
+  color: #ff9999;
+}
+
+.precaution strong {
+  color: #00d9ff;
+}
+
+.copyButton {
+  margin-top: 24px;
+  width: 100%;
+}
+
 .error {
   background: rgba(255, 77, 77, 0.1);
   border: 1px solid rgba(255, 77, 77, 0.3);

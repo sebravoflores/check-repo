@@ -6,12 +6,14 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState('');
+  const [copied, setCopied] = useState(false);
 
   const handleAnalyze = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
     setResult(null);
+    setCopied(false);
 
     try {
       const response = await fetch('/api/analyze', {
@@ -20,12 +22,11 @@ export default function Home() {
         body: JSON.stringify({ url }),
       });
 
+      const data = await response.json();
       if (!response.ok) {
-        const data = await response.json();
         throw new Error(data.error || 'Error analyzing repository');
       }
 
-      const data = await response.json();
       setResult(data);
     } catch (err) {
       setError(err.message);
@@ -34,11 +35,30 @@ export default function Home() {
     }
   };
 
-  const getScoreLevel = (score) => {
-    if (score >= 80) return 'Excelente';
-    if (score >= 60) return 'Bueno';
-    if (score >= 40) return 'Aceptable';
-    return 'Necesita mejoras';
+  const buildReportText = (data) => {
+    const lines = [
+      `Reporte de seguridad: ${data.owner}/${data.repo}`,
+      `Puntuación: ${data.score}/100 (riesgo ${data.level})`,
+      '',
+    ];
+    data.breakdown.forEach((item) => {
+      lines.push(`${item.passed ? '[OK]' : '[FALLA]'} ${item.title} (${item.earned}/${item.points})`);
+      lines.push(`  Detalle: ${item.detail}`);
+      if (!item.passed) {
+        lines.push(`  Riesgo: ${item.risk}`);
+        lines.push(`  Precaución: ${item.precaution}`);
+      }
+    });
+    return lines.join('\n');
+  };
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(buildReportText(result));
+      setCopied(true);
+    } catch {
+      setCopied(false);
+    }
   };
 
   return (
@@ -89,29 +109,32 @@ export default function Home() {
             >
               <div className={styles.scoreText}>{result.score}</div>
             </div>
+            <div className={styles.riskLabel}>Riesgo {result.level}</div>
           </div>
 
           <div className={styles.criteriaList}>
-            {Object.entries(result.criteria).map(([key, criterion]) => (
-              <div key={key} className={`${styles.criterion} ${result.results[key] ? styles.passed : styles.failed}`}>
-                <div className={styles.criterionIcon}>{result.results[key] ? '✓' : '✗'}</div>
+            {result.breakdown.map((item) => (
+              <div key={item.key} className={`${styles.criterion} ${item.passed ? styles.passed : styles.failed}`}>
+                <div className={styles.criterionIcon}>{item.passed ? '✓' : '✗'}</div>
                 <div className={styles.criterionContent}>
                   <div className={styles.criterionTitle}>
-                    {criterion.title} (+{criterion.points})
+                    {item.title} ({item.earned}/{item.points})
                   </div>
+                  <div className={styles.detail}>{item.detail}</div>
+                  {!item.passed && (
+                    <>
+                      <div className={styles.risk}><strong>Riesgo:</strong> {item.risk}</div>
+                      <div className={styles.precaution}><strong>Precaución:</strong> {item.precaution}</div>
+                    </>
+                  )}
                 </div>
               </div>
             ))}
           </div>
 
-          <div className={styles.summary}>
-            <div className={styles.summaryTitle}>Resumen</div>
-            <strong>Evaluación General:</strong> {getScoreLevel(result.score)}
-            <br />
-            <strong>Puntos alcanzados:</strong> {result.score}/100
-            <br />
-            Este repositorio cumple con {result.score}% de los criterios de seguridad.
-          </div>
+          <button type="button" className={`${styles.button} ${styles.copyButton}`} onClick={handleCopy}>
+            {copied ? 'Reporte copiado' : 'Copiar reporte'}
+          </button>
         </div>
       )}
     </div>
